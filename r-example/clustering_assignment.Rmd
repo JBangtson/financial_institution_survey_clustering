@@ -1,0 +1,122 @@
+---
+title: "Survey Clustering"
+author: "John Chandler"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r includes, echo=F, warning=F, message=F}
+library(cluster)
+library(tidyverse)
+
+```
+
+## Clustering
+
+This assignment asks you to cluster the Washington survey data explored in the 
+$\chi^2$ and ANOVA assignments. A full description of that data is in those 
+markdown files. I've included the appendix data description at the bottom. Since
+those assignments require EDA, you _don't_ have to do an EDA in this assignment.
+
+```{r data-input}
+d <- readr::read_tsv("washington_survey_data.txt")
+```
+
+## Demo Clustering
+
+In this section, perform a cluster analysis using the non-value fields: 
+
+* age
+* gender
+* engagement
+* account.age
+
+Choose a number of clusters and use `pam` to cluster the data using these fields. Briefly 
+describe the clusters. How evenly do your clusters align with the regions?  
+
+
+## Values Clustering
+
+Similarly to the previous section, perform a cluster analysis, this time on the
+values questions: 
+
+* fair
+* harm
+* in.group
+* authority
+* purity
+* public.sector
+* sustainability
+* localism
+
+After you've built your clusters, report the following information on each 
+cluster: 
+
+1. Predominant region
+1. Average age and account age
+1. Most common focal value
+1. Mean results on the questions of `pub.greater.priv`, `experience.more.important`,
+and `teachers.underpaid`
+
+
+
+# Appendix: Full Data Description
+A financial institution in Washington has become concerned that their current membership 
+base is not well-aligned with their corporate values. Through that concern they 
+realized that don't actually understand their membership's values very well. They 
+surveyed 2,421 members to shed light on the issue. 
+
+The heart of the survey was the Moral Foundations Theory of Jonathan Haidt. Members 
+were surveyed on the Moral Foundations Questionnaire, which you should take so you 
+understand the test. Survey respondents were scored on the five foundations as well 
+as a single-number summary, Progressivism. 
+
+The financial institution values Localism, Sustainability, and Education. These aspects 
+of member's values were assessed in the survey as well. Localism and Sustainability used
+validated scales and thus can be summarized via a single score, where higher values indicate
+greater support for the values. Education is summarized by the following three questions, 
+which we do not have evidence can be combined into a single score:
+
+* In general, public schools provide a better education than private schools.
+* Public school teachers are underpaid.
+* Experience is more important than education in determining success in life.
+These questions were evaluated on a 1 to 6 scale where 1 indicated "Strongly Disagree" and 
+6 indicated "Strongly Agree". 
+
+Finally, we have information on the member that can be used to understand variation 
+in their values. 
+
+The data consists of the following columns:
+
+* ID: a unique identifier for the survey respondent.
+* age: the age of the respondent.
+* gender: gender was evaluated with robust scale and collapsed into male/female/other for 
+  those whose gender identity was not male or female.
+* engagement: three categories of engagement with the financial institution.
+* mem.edu: the self-reported education level of the member with the following scale:
+* zip: the member zip code. 
+* channel: how the member joined the financial institution. Options are "Loan" if they joined 
+  via an auto loan, "Branch" if they joined at a branch and other for online or unknown. 
+* progressivism/harm/fair/in.group/authority/purity: The MFQ results.
+* account.age: the age of the member's account, in years. 
+* region: The region of Washington the member lives in. May be easier to work with than zip.
+* public.sector: has the person ever been a public employee?
+* sustainability/localism: Scores on the validated scales. Higher values indicate greater
+  support for the value.
+* pub.greater.priv/experience.more.important/teachers.underpaid: The responses to the 
+  education questions above. 
+* main.focal.value: Respondents were asked, "Below is a list of broad areas to which people 
+  often dedicate their volunteer or philanthropic efforts. From this list, please select the 
+  most important to you. If an area of particular importance is missing, please let us know 
+  about it in the space for 'other.'" This column holds the respondents' answer to that question.
+* support.of.focal.value: Respondents were given an opportunity to indicate how they 
+  supported their focal value. Those responses were collapsed into a single score, where 
+  a higher value indicates more support.
+
+
+
+
+
